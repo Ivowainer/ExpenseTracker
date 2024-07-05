@@ -8,10 +8,12 @@
 
     <ItemGroup>
         <PackageReference Include="DotEnv.Core" Version="3.1.0" />
+        <PackageReference Include="MongoDB.Driver" Version="2.27.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Config\" />
       <Folder Include="Controllers\" />
     </ItemGroup>
 

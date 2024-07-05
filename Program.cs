@@ -1,8 +1,12 @@
 using DotEnv.Core;
+using ExpenseTracker.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddTransient<EnvReader>();
+builder.Services.Configure<ExpenseTrackerDatabaseSettings>(builder.Configuration.GetSection("ExpenseTrackerDatabase"));
 
 {
     new EnvLoader()
@@ -10,7 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
         .Load();
 }
 
-builder.Services.AddTransient<EnvReader>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
