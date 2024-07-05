@@ -1,19 +1,22 @@
 using DotEnv.Core;
 using ExpenseTracker.Models;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// MongoDbAccess Config
+var settings = builder.Configuration.GetSection("ExpenseTrackerDatabase").Get<ExpenseTrackerDatabaseSettings>();
+builder.Services.AddSingleton(settings);
 
-builder.Services.AddTransient<EnvReader>();
-builder.Services.Configure<ExpenseTrackerDatabaseSettings>(builder.Configuration.GetSection("ExpenseTrackerDatabase"));
+builder.Services.AddSingleton<MongoDbAccess>();
 
+// ENV Settings
 {
     new EnvLoader()
         .AddEnvFile("config.env")
         .Load();
 }
-
+builder.Services.AddTransient<IEnvReader, EnvReader>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
