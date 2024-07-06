@@ -8,7 +8,7 @@ public class MongoDbAccess
 {
     private readonly MongoClient _client;
     private readonly IEnvReader _reader;
-    private readonly ExpenseTrackerDatabaseSettings _settings;
+    public readonly ExpenseTrackerDatabaseSettings _settings;
 
     public MongoDbAccess(IOptions<ExpenseTrackerDatabaseSettings> settings, IEnvReader reader)
     {

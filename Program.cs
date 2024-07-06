@@ -1,12 +1,14 @@
 using DotEnv.Core;
+using ExpenseTracker;
+using ExpenseTracker.Interfaces;
 using ExpenseTracker.Models;
-using MongoDB.Driver;
+using ExpenseTracker.Repositories;
+using ExpenseTracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // MongoDbAccess Config
-var settings = builder.Configuration.GetSection("ExpenseTrackerDatabase").Get<ExpenseTrackerDatabaseSettings>();
-builder.Services.AddSingleton(settings);
+builder.Services.Configure<ExpenseTrackerDatabaseSettings>(builder.Configuration.GetSection("ExpenseTrackerDatabase"));
 
 builder.Services.AddSingleton<MongoDbAccess>();
 
@@ -18,13 +20,15 @@ builder.Services.AddSingleton<MongoDbAccess>();
 }
 builder.Services.AddTransient<IEnvReader, EnvReader>();
 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
