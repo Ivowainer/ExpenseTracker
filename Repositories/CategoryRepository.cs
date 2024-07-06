@@ -1,4 +1,6 @@
-﻿using ExpenseTracker.Models;
+﻿using ExpenseTracker.DTOs;
+using ExpenseTracker.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace ExpenseTracker.Repositories;
